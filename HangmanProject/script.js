@@ -3,33 +3,36 @@ var word = "";
 var numWrong = 0;
 var numRight = 0;
 var phraseLength = 0;
-var numChar = 0;
+var numChar = 0; // variables listed above with corresponding fuctions below
+                  // to be called upon ^ selects from 1 of 26 different songs/phrases/movies
 var phrases = ["Early bird gets the worm", "A bird in the hand is worth two in the bush", "A chain is only as strong as its weakest link", "A diamond in the rough", "A fool's paradise", "A friend in need is a friend indeed", "Dog days", "Dollars to donuts", "Add insult to injury", "Don't cry over spilled milk", "Don't go there", "Don't have a clue", "Down in the dumps", "Piece of cake", "Down to the wire", "Go the whole nine", "An eye for an eye", "Hit the hay", "Stab me in the back", "Drink like a fish", "Cut to the chase", "Best of both worlds", "Kill two birds with one stone", "Break a leg", "Hit the nail on the head", "Dropping like flies"];
 var movies = ["Men In Black", "Back to the Futue", "Titanic", "Shawshank Redemption", "The Godfather", "Pulp Fiction", "The Matrix", "Goodfellas", "The Goonies", "Meet the Fockers", "John Wick", "Me Myself and Irene", "Toy Story", "Malcolm X", "Do the Right Thing", "Wolf of Wallstreet", "Coming to America", "Harold and Kumar", "Finding Dory", "Dead Presidents", "Jurassic Park", "Pirates of the Caribbean", "Wizard of Oz", "Home Alone", "Saving Private Ryan", "Beauty & Beast"];
 var songs = ["We Found Love in a hopless place", "They tried to make me go to rehab", "Work, work, work, work, work", "Just a small town girl", "Summer summer summer time", "Yeah it's a party in the USA?", "Nah nah nah nah, hey hey hey Goodbye", "And I think to myself what a wonderful world", "Hey hey you you I don't like your girlfriend", "I fell in to a burning ring of fire I went down down down", "In Neeewyork", "Santa Baby", "What's goin on?", "Touch the Sky", "Don't believe me just watch", "Now I do what I want now I do what I want", "Smells Like Teen Spirit", "Another one bites the dust", "Rock with you", "B-B-B-Bennie and the Jets", "Single Ladies", "Oh such a perfect day I'm glad I spent it with you", "Lovin you", "Shake It up Baby", "All of the Lights", "Purple Rain"];
 var challenges = ["A"]; //VOID
 
-function sp(){
+function sp(){ //invokes singlePlayer mode & functions
     document.getElementById('introPage').style.display = "none";
     document.getElementById('multiPage').style.display = "none";
     document.getElementById('singlePage').style.display = "block";
 }
 
-function mp(){
+function mp(){ //invokes multiplayer mode and fuctions
     document.getElementById('introPage').style.display = "none";
     document.getElementById('singlePage').style.display = "none";
     document.getElementById('multiPage').style.display = "block";
 }
 
-function phrase(){
-    rand = Math.floor(Math.random()*phrases.length);
-    word = phrases[rand];
+function phrase(){ //fuction phrase option
+                  //Picks from random numer, goes into phrases array and assigns a number
+
+rand = Math.floor(Math.random()*phrases.length);
+word = phrases[rand];
     document.getElementById('singlePage').style.display = "none";
     document.getElementById('categoryName').innerHTML = "Phrases..think, you've heard them before";
-    hangman();
+    hangman(); //sets random numer as word by going into the fuction hangman()
 }
 
-function movie(){
+function movie(){ //function for movies option
     rand = Math.floor(Math.random()*movies.length);
     word = movies[rand];
     document.getElementById('singlePage').style.display = "none";
@@ -37,7 +40,7 @@ function movie(){
     hangman();
 }
 
-function song(){
+function song(){ //fuction for songs option
     rand = Math.floor(Math.random()*songs.length);
     word = songs[rand];
     document.getElementById('singlePage').style.display = "none";
@@ -45,125 +48,128 @@ function song(){
     hangman();
 }
 
-function challenge(){ //VOID
+function challenge(){ //VOID/Removed!
     rand = Math.floor(Math.random()*challenges.length);
     word = challenges[rand];
     numChar = 1;
-    var letter = word.substring(0,1);
-        document.getElementById('letter1').innerHTML = letter;
-        document.getElementById('letter1').style.visibility = "hidden";
-        document.getElementById('underline1').style.display = "block";
-        document.getElementById('underline1').style.borderBottom = "3px solid black";
-    document.getElementById('singlePage').style.display = "none";
-    document.getElementById('gamePage').style.display = "block";
-    document.getElementById('categoryName').innerHTML = "Guess every letter other than the correct one to win!";
-    document.getElementById('categoryName').style.width = "100%";
-    if(document.getElementById('underline1').offsetWidth == 50){
+  var letter = word.substring(0,1);
+  document.getElementById('letter1').innerHTML = letter;
+  document.getElementById('letter1').style.visibility = "hidden";
+  document.getElementById('underline1').style.display = "block";
+  document.getElementById('underline1').style.borderBottom = "3px solid black";
+  document.getElementById('singlePage').style.display = "none";
+  document.getElementById('gamePage').style.display = "block";
+  document.getElementById('categoryName').innerHTML = "Guess every letter other than the correct one to win!";
+  document.getElementById('categoryName').style.width = "100%";
+      if(document.getElementById('underline1').offsetWidth == 50){
         document.getElementById('categoryName').style.fontSize = "45px";
     }
-    if(document.getElementById('underline1').offsetWidth == 28){
+      if(document.getElementById('underline1').offsetWidth == 28){
         document.getElementById('categoryName').style.fontSize = "30px";
     }
-    if(document.getElementById('underline1').offsetWidth == 18){
+      if(document.getElementById('underline1').offsetWidth == 18){
         document.getElementById('categoryName').style.fontSize = "20px";
     }
-    document.getElementById('letterBank').style.display = "none";
-    document.getElementById('challengeBank').style.display = "block";
-    phraseLength = 1;
-    draw();
+      document.getElementById('letterBank').style.display = "none";
+      document.getElementById('challengeBank').style.display = "block";
+      phraseLength = 1;
+      draw();
 }
 
-function challengeGuess(){ /// ENTIRE 'Challenge FUCTION voided in index.html
-    var target = event.target || event.srcElement;
-    target.style.visibility = "hidden";
-    var lower = target.id;
-    var upper = document.getElementById(lower).getAttribute('value');
-    var results = document.getElementById('results');
-    if(document.getElementById('letter1').innerHTML === upper){
-        document.getElementById('letter1').style.visibility = "visible";
-        numRight++;
+function challengeGuess(){ /// ENTIRE 'Challenge function was voided in index.html
+  var target = event.target || event.srcElement;
+  target.style.visibility = "hidden";
+  var lower = target.id;
+  var upper = document.getElementById(lower).getAttribute('value');
+  var results = document.getElementById('results');
+  if(document.getElementById('letter1').innerHTML === upper){
+  document.getElementById('letter1').style.visibility = "visible";
+  numRight++;
     }
     if(numRight==0){
-        numWrong++;
-        hang();
+    numWrong++;
+    hang();
 
 
     }
-    if(numRight==1){
-        results.style.visibility = "visible";
-        results.style.color = "red";
-        results.innerHTML = "You lose!";
-        if(document.getElementById('underline1').offsetWidth == 50){
+    if(numRight==1){ // VOID
+    results.style.visibility = "visible";
+    results.style.color = "red";
+    results.innerHTML = "You lose!";
+    if(document.getElementById('underline1').offsetWidth == 50){
+      results.style.fontSize = "200px";
+      results.style.height = "200px";
+      results.style.lineHeight = "200px";
+        }
+    if(document.getElementById('underline1').offsetWidth == 28){
+      results.style.marginTop = "20px";
+      results.style.fontSize = "100px";
+      results.style.height = "100px";
+      results.style.lineHeight = "100px";
+        }
+    if(document.getElementById('underline1').offsetWidth == 18){
+      results.style.marginTop = "15px";
+      results.style.fontSize = "75px";
+      results.style.height = "75px";
+      results.style.lineHeight = "75px";
+        }
+      document.getElementById('challengeBank').style.display = "none"; //voided
+      document.getElementById('vidSent').style.display = "block";
+      document.getElementById('again').style.display = "block";
+      document.getElementById('home').style.display = "block";
+    }
+    if(numWrong==25){ //voided
+      results.style.visibility = "visible";
+      results.style.color = "#00b100";
+      results.innerHTML = "You win!";
+    if(document.getElementById('underline1').offsetWidth == 50){
             results.style.fontSize = "200px";
             results.style.height = "200px";
             results.style.lineHeight = "200px";
         }
-        if(document.getElementById('underline1').offsetWidth == 28){
+    if(document.getElementById('underline1').offsetWidth == 28){
             results.style.marginTop = "20px";
             results.style.fontSize = "100px";
             results.style.height = "100px";
             results.style.lineHeight = "100px";
         }
-        if(document.getElementById('underline1').offsetWidth == 18){
+    if(document.getElementById('underline1').offsetWidth == 18){
             results.style.marginTop = "15px";
             results.style.fontSize = "75px";
             results.style.height = "75px";
             results.style.lineHeight = "75px";
         }
-        document.getElementById('challengeBank').style.display = "none"; //voided
-        document.getElementById('vidSent').style.display = "block";
-        document.getElementById('again').style.display = "block";
-        document.getElementById('home').style.display = "block";
-    }
-    if(numWrong==25){
-        results.style.visibility = "visible";
-        results.style.color = "#00b100";
-        results.innerHTML = "You win!";
-        if(document.getElementById('underline1').offsetWidth == 50){
-            results.style.fontSize = "200px";
-            results.style.height = "200px";
-            results.style.lineHeight = "200px";
-        }
-        if(document.getElementById('underline1').offsetWidth == 28){
-            results.style.marginTop = "20px";
-            results.style.fontSize = "100px";
-            results.style.height = "100px";
-            results.style.lineHeight = "100px";
-        }
-        if(document.getElementById('underline1').offsetWidth == 18){
-            results.style.marginTop = "15px";
-            results.style.fontSize = "75px";
-            results.style.height = "75px";
-            results.style.lineHeight = "75px";
-        }
-        document.getElementById('challengeBank').style.display = "none"; //voided
-        document.getElementById('vidSent').style.display = "block";
-        document.getElementById('again').style.display = "block";
-        document.getElementById('home').style.display = "block";
-        document.getElementById('letter1').style.visibility = "visible";
+      document.getElementById('challengeBank').style.display = "none"; //voided
+      document.getElementById('vidSent').style.display = "block";
+      document.getElementById('again').style.display = "block";
+      document.getElementById('home').style.display = "block";
+      document.getElementById('letter1').style.visibility = "visible";
     }
 }
 
-function countChars(countfrom,displayto) {
+function countChars(countfrom,displayto) { //counts and keeps track of characters typed into phrase textbox.
     var len = document.getElementById(countfrom).value.length;
     document.getElementById(displayto).innerHTML = len;
 }
 
-function readText(){
+function readText(){ // takes characters typed from countChars fuction and renders them to the game when user hits "submit"
     word = document.getElementById('input').value;
     hangman();
 }
 
 function hangman(){
     var x = word.length;
-        if(x==0){
-            alert("Enter a phrase in the text box.");
-            return;
-        }
+    if(x==0){
+    alert("Enter a phrase in the text box.");
+    return; //Ensures the user has entered something in the box to proceed
+
+      }
+
     var y = x-1;
     var spaces = 0;
     var validChar = new Array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", " ", "?", "!", ",", ".", "-", "'");
-    for(z = 0; z < word.length; z++){
+    for(z = 0; z < word.length; z++){ //Ensures phrase entered contains valid characters fom the array above
+
         var letter = word.substring(y,x);
         if(validChar.indexOf(letter) > -1){
             x--;
@@ -174,34 +180,37 @@ function hangman(){
             return;
         }
     }
-    x = word.length;
+    x = word.length; //Takes the letters and underlines them.
     y = x-1;
-    while (x>0){
-        numChar++;
-        var letter = word.substring(y,x);
-        if(letter === " "){
-            document.getElementById('letter'+x).innerHTML = "&nbsp;";
-            document.getElementById('letter'+x).style.visibility = "hidden";
-            document.getElementById('letter'+x).style.display = "block";
-            document.getElementById('underline'+x).style.display = "block";
-            spaces++;
+    while (x>0){ //as long as the word entered lenth is greater than 0
+    numChar++;
+    var letter = word.substring(y,x); // will take y/1 before the last letter then go the the x which is x-1= y
+    if(letter === " "){
+    document.getElementById('letter'+x).innerHTML = "&nbsp;"; //adds necessary space if needed
+    document.getElementById('letter'+x).style.visibility = "hidden";
+    document.getElementById('letter'+x).style.display = "block";
+    document.getElementById('underline'+x).style.display = "block";
+    spaces++;
+
         }
-        else if(letter === "?" || letter === "!" || letter === "," || letter === "." || letter === "-" || letter === "'"){
-            document.getElementById('letter'+x).innerHTML = letter;
-            document.getElementById('letter'+x).style.display = "block";
-            document.getElementById('underline'+x).style.display = "block";
-            spaces++;
+
+      else if(letter === "?" || letter === "!" || letter === "," || letter === "." || letter === "-" || letter === "'"){
+          document.getElementById('letter'+x).innerHTML = letter;
+          document.getElementById('letter'+x).style.display = "block";
+          document.getElementById('underline'+x).style.display = "block";
+          spaces++;
         }
-        else{
-            document.getElementById('letter'+x).innerHTML = letter;
-            document.getElementById('letter'+x).style.visibility = "hidden";
-            document.getElementById('underline'+x).style.display = "block";
-            document.getElementById('underline'+x).style.borderBottom = "3px solid black";
+      else{
+        document.getElementById('letter'+x).innerHTML = letter;
+        document.getElementById('letter'+x).style.visibility = "hidden";
+        document.getElementById('underline'+x).style.display = "block";
+        document.getElementById('underline'+x).style.borderBottom = "3px solid black";
+
         }
         x--;
         y--;
     }
-    phraseLength = word.length - spaces;
+    phraseLength = word.length - spaces; //subtracts all letters that cannot be gussed
     document.getElementById('multiPage').style.display = "none";
     document.getElementById('gamePage').style.display = "block";
     splitWords();
@@ -209,9 +218,9 @@ function hangman(){
     draw(); // 'challengeBank' element voided in Final Stages of Project
 }
 
-function draw(){
+function draw(){ //self-explanatory, got help frpm internet to set up and for the calulations.
     var ctx = document.getElementById("hangman").getContext('2d');
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "white";  // var ctx=draws line on a canvas
         ctx.lineWidth=3;
         ctx.fillRect(0, 0, 300, 300);
         ctx.beginPath(); //vertical bar
@@ -324,31 +333,34 @@ function draw(){
             cntx.stroke();
 }
 
-function splitWords(){
+function splitWords(){ //**Not working properly. //Supposed to give each word displayed
+                      //displayed in the game its own space/underline
+                      //suppsed to keep every word on its own line to need bleed through/have a word or two standing on their own line
     var placeKeep = 0;
-    var countBack = 16;
+    var countBack = 16; //if 16th letter is a space it will be removed
     if(numChar > 15){
-        while(countBack > 1){
-            if(document.getElementById('letter16').innerHTML == "&nbsp;"){
-                document.getElementById('underline16').style.width = "0px";
-                document.getElementById('underline16').style.marginRight = "0px";
+    while(countBack > 1){
+      if(document.getElementById('letter16').innerHTML == "&nbsp;"){
+        document.getElementById('underline16').style.width = "0px";
+        document.getElementById('underline16').style.marginRight = "0px";
             }
-            if(document.getElementById('letter'+countBack).innerHTML == "&nbsp;"){
-                document.getElementById('underline'+countBack).style.width = (document.getElementById('underline1').offsetWidth)*(16-countBack)+"px";
-                placeKeep = countBack;
-                countBack = 0;
+      if(document.getElementById('letter'+countBack).innerHTML == "&nbsp;"){
+        document.getElementById('underline'+countBack).style.width = (document.getElementById('underline1').offsetWidth)*(16-countBack)+"px";
+        placeKeep = countBack;
+        countBack = 0;
             }
-            countBack--;
+            countBack--; //should go back number of necessary spaces if a word is bleeding over
+                        //not working properly
         }
     }
-    for(x=0;x<8;x++){
-        countBack = 15+placeKeep;
-        if(numChar > countBack){
-            while(countBack > 1){
-                if(document.getElementById('letter'+countBack).innerHTML == "&nbsp;"){
-                    document.getElementById('underline'+countBack).style.width = (document.getElementById('underline1').offsetWidth*((16+placeKeep)-countBack))+"px";
-                    placeKeep = countBack;
-                    countBack = 0;
+  for(x=0;x<8;x++){
+    countBack = 15+placeKeep;
+    if(numChar > countBack){
+    while(countBack > 1){
+    if(document.getElementById('letter'+countBack).innerHTML == "&nbsp;"){
+      document.getElementById('underline'+countBack).style.width = (document.getElementById('underline1').offsetWidth*((16+placeKeep)-countBack))+"px";
+      placeKeep = countBack;
+      countBack = 0; // runs countBack function 8 more times
                 }
                 countBack--;
             }
@@ -357,20 +369,20 @@ function splitWords(){
 
 }
 
-function guessLetter(){
-    var correct = 0;
-    var target = event.target || event.srcElement;
-    target.style.visibility = "hidden";
-    var lower = target.id;
-    var upper = document.getElementById(lower).getAttribute('value');
-    var results = document.getElementById('results');
-    var ul1 = document.getElementById('underline1').offsetWidth;
-    for(a = 1; a < 101; a++){
-        if(document.getElementById('letter'+a).innerHTML === upper || document.getElementById('letter'+a).innerHTML === lower){
-            document.getElementById('letter'+a).style.visibility = "visible";
-            correct++;
-            numRight++;
-        }
+function guessLetter(){ //finds id and value of letter guessed an matches it accordingly based on id/value assigned in html
+  var correct = 0;
+  var target = event.target || event.srcElement;
+  target.style.visibility = "hidden";
+  var lower = target.id; //finds id (lowercase)
+  var upper = document.getElementById(lower).getAttribute('value'); //uppercase id's
+  var results = document.getElementById('results');
+  var ul1 = document.getElementById('underline1').offsetWidth;
+  for(a = 1; a < 101; a++){
+  if(document.getElementById('letter'+a).innerHTML === upper || document.getElementById('letter'+a).innerHTML === lower){
+    document.getElementById('letter'+a).style.visibility = "visible";
+    correct++;
+    numRight++; //checks to make sure (upper/lowecase characters are matched/assigned correctly)
+  }             // displays upper/lowercase character
     }
     if(correct==0){
         numWrong++;
@@ -413,48 +425,50 @@ function guessLetter(){
     }
 }
 
-function win(){
+  function win(){ //Fuction that will run when user has won the game of hangman
     var ul1 = document.getElementById('underline1').offsetWidth;
     var again = document.getElementById('again');
     var results = document.getElementById('results');
         results.style.visibility = "visible";
         results.style.color = "#00b100";
     if(numWrong > 6){
-        results.innerHTML = "You got it!...";
-        document.getElementById('letterBank').style.display = "none";
-        again.style.display = "block";
-        document.getElementById('home').style.display = "block";
-        document.getElementById('vidSent').style.display = "block";
-        if(ul1 == 50){
-            results.style.lineHeight = "70px";
-            results.style.fontSize = "30px";
+    results.innerHTML = "You got it!...";
+    document.getElementById('letterBank').style.display = "none"; //retrives letters from created letterBank
+    again.style.display = "block";
+    document.getElementById('home').style.display = "block";
+    document.getElementById('vidSent').style.display = "block";
+
+    if(ul1 == 50){
+      results.style.lineHeight = "70px";
+      results.style.fontSize = "30px";
         }
-        if(ul1 == 28){
-            results.style.lineHeight = "50px";
-            results.style.fontSize = "25px";
+    if(ul1 == 28){
+      results.style.lineHeight = "50px";
+      results.style.fontSize = "25px";
         }
-        if(ul1 == 18){
-            results.style.lineHeight = "40px";
-            results.style.fontSize = "20px";
+    if(ul1 == 18){
+      results.style.lineHeight = "40px";
+      results.style.fontSize = "20px";
         }
     }
     else{
-        results.innerHTML = "Congragulations!!! You WON!";
-        document.getElementById('letterBank').style.display = "none";
-        again.style.display = "block";
-        document.getElementById('home').style.display = "block";
-        document.getElementById('vidSent').style.display = "block";
-        if(ul1 == 50){
+    results.innerHTML = "Congragulations!!! You WON!"; //renders text when user has won game
+    document.getElementById('letterBank').style.display = "none";
+    again.style.display = "block";
+    document.getElementById('home').style.display = "block";
+    document.getElementById('vidSent').style.display = "block";
+
+    if(ul1 == 50){
             again.style.marginTop = "75px";
             results.style.marginTop = "75px";
             results.style.fontSize = "200px";
         }
-        if(ul1 == 28){
+    if(ul1 == 28){
             again.style.marginTop = "50px";
             results.style.marginTop = "40px";
             results.style.fontSize = "100px";
         }
-        if(ul1 == 18){
+    if(ul1 == 18){
             again.style.marginTop = "40px";
             results.style.marginTop = "15px";
             results.style.fontSize = "75px";
@@ -462,7 +476,7 @@ function win(){
     }
 }
 
-function hang(){
+function hang(){ // as user guesses incorrect answers, fuction will run to start drawling hangman as number of incorrect guesses increases.
     var ctx = document.getElementById("hangman").getContext('2d');
     if(numWrong==1){
         ctx.beginPath(); //head
@@ -902,8 +916,8 @@ function hang(){
             ctx.lineTo(101,235);
             ctx.stroke();
     }
-    if(numWrong==25){
-        ctx.fillRect(86, 220, 45, 45); //cover head
+    if(numWrong==25){ //draws hangman all the way down to 25th incorrect guess and his head is on the ground.
+        ctx.fillRect(86, 220, 45, 45); //cover head //** Got help with all hangman draw.
         ctx.beginPath(); //head
             ctx.arc(87, 248, 20, 0, 2*Math.PI);
             ctx.stroke();
@@ -928,31 +942,32 @@ function hang(){
     }
 }
 
-function reset(){
+function reset(){ //**** NOT working properly.
     var ul1 = document.getElementById('underline1').offsetWidth;
     var results = document.getElementById('results');
     var again = document.getElementById('again');
     for(a = 1; a < 101; a++){
-        document.getElementById('letter'+a).innerHTML = "&nbsp;";
-        document.getElementById('underline'+a).style.width = ul1 + "px";
-        if(ul1 == 50){
-            document.getElementById('underline'+a).style.marginRight = "5px";
-            results.style.height = "70px";
+      document.getElementById('letter'+a).innerHTML = "&nbsp;"; //adds space for letters
+      document.getElementById('underline'+a).style.width = ul1 + "px";
+
+    if(ul1 == 50){
+      document.getElementById('underline'+a).style.marginRight = "5px";
+      results.style.height = "70px";
         }
-        else if(ul1 == 28){
-            document.getElementById('underline'+a).style.marginRight = "3px";
-            results.style.height = "50px";
+    else if(ul1 == 28){
+      document.getElementById('underline'+a).style.marginRight = "3px";
+      results.style.height = "50px";
         }
-        else{
-            document.getElementById('underline'+a).style.marginRight = "3px";
-            results.style.height = "40px";
+    else{
+    document.getElementById('underline'+a).style.marginRight = "3px";
+    results.style.height = "40px";
         }
-        document.getElementById('underline'+a).style.display = "none";
-        document.getElementById('underline'+a).style.borderBottom = "0px";
-    }
+    document.getElementById('underline'+a).style.display = "none";
+    document.getElementById('underline'+a).style.borderBottom = "0px";
+  } // for loop is supposed to make sure all letters are cleared out of spaces/underlines
     var bank = document.getElementById("letterBank").querySelectorAll("div");
     var cBank = document.getElementById("challengeBank").querySelectorAll("div");
-    for(b = 0; b < 26; b++){
+    for(b = 0; b < 26; b++){ //for loop that gets all letters to appear in letterBox
         bank[b].style.visibility = "visible";
         cBank[b].style.visibility = "visible";
     }
@@ -962,31 +977,31 @@ function reset(){
     numChar = 0;
     results.style.marginTop = "5px";
     results.style.lineHeight = "40px";
-    results.innerHTML = " ";
+    results.innerHTML = " "; //supposed to reset and put a space between letters
     document.getElementById('vidSent').style.display = "none";
     document.getElementById('letterBank').style.display = "block";
     again.style.marginTop = "0px";
     again.style.display = "none";
     document.getElementById('home').style.display = "none";
-    if(phrases.indexOf(word) > -1){
-        phrases.splice(rand,1);
-        phrase();
+if(phrases.indexOf(word) > -1){ //if/else is put in place so that when user plays again they will not keep recieving the same word over and over based on the category choosen.
+        phrases.splice(rand,1); //splicing adds and remvoes previously used words from array
+        phrase(); //re-runs phrase fuction after already used word is removed^
     }
-    else if(movies.indexOf(word) > -1){
+else if(movies.indexOf(word) > -1){
         movies.splice(rand,1);
         movie();
     }
-    else if(songs.indexOf(word) > -1){
+else if(songs.indexOf(word) > -1){
         songs.splice(rand,1);
         song();
     }
-    else if(document.getElementById('charcount').innerHTML > 0){
+else if(document.getElementById('charcount').innerHTML > 0){
         document.getElementById('gamePage').style.display = "none";
         document.getElementById('input').value = "";
         document.getElementById('charcount').innerHTML = "0";
         document.getElementById('multiPage').style.display = "block";
     }
-    else{
-        challenge(); //voided
+else{
+        challenge(); //mode totally VOIDED
     }
 }
