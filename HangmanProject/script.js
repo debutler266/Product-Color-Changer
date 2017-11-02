@@ -35,7 +35,7 @@ word = phrases[rand];
 function movie(){ //function for movies option
     rand = Math.floor(Math.random()*movies.length);
     word = movies[rand];
-    document.getElementById('singlePage').style.display = "none";
+    document.getElementById('singlePage').style.display = "none"; // Set to block and dispaly specific functions or pages when user is using the game
     document.getElementById('categoryName').innerHTML = "GET YOUR POPCORN READY..";
     hangman();
 }
@@ -75,7 +75,7 @@ function challenge(){ //VOID/Removed!
       phraseLength = 1;
       draw();
 }
-
+//******lines 79-148 are all for the challengeGuess fuction that has been voided out of the game entirely. IGNORE!!!
 function challengeGuess(){ /// ENTIRE 'Challenge function was voided in index.html
   var target = event.target || event.srcElement;
   target.style.visibility = "hidden";
@@ -88,11 +88,11 @@ function challengeGuess(){ /// ENTIRE 'Challenge function was voided in index.ht
     }
     if(numRight==0){
     numWrong++;
-    hang();
+    hang(); // voided
 
 
     }
-    if(numRight==1){ // VOID
+    if(numRight==1){ // VOID LINES
     results.style.visibility = "visible";
     results.style.color = "red";
     results.innerHTML = "You lose!";
@@ -123,7 +123,7 @@ function challengeGuess(){ /// ENTIRE 'Challenge function was voided in index.ht
       results.style.color = "#00b100";
       results.innerHTML = "You win!";
     if(document.getElementById('underline1').offsetWidth == 50){
-            results.style.fontSize = "200px";
+            results.style.fontSize = "200px"; //else if that is set to dispaly a certain page/result based the user's performance in the game in challengeGuess mode.
             results.style.height = "200px";
             results.style.lineHeight = "200px";
         }
@@ -145,7 +145,7 @@ function challengeGuess(){ /// ENTIRE 'Challenge function was voided in index.ht
       document.getElementById('home').style.display = "block";
       document.getElementById('letter1').style.visibility = "visible";
     }
-}
+} ////// Ignore ^ lines 79-148 /////// 
 
 function countChars(countfrom,displayto) { //counts and keeps track of characters typed into phrase textbox.
     var len = document.getElementById(countfrom).value.length;
@@ -160,63 +160,74 @@ function readText(){ // takes characters typed from countChars fuction and rende
 function hangman(){
     var x = word.length;
     if(x==0){
-    alert("Enter a phrase in the text box.");
+    alert("Enter a phrase in the text box."); //prompts users to enter a phrase for multiplayer mode
     return; //Ensures the user has entered something in the box to proceed
 
       }
+///Extra feature learned from @author Joe Reisigle
+//(project for a production class at the University of Georgia's New Media Institute.
+//gives phrase guesser in 'mp' proper functionality and so that users cannot enter non letters.
+//this will prevent users from proceeding to the game when they enter a phrase that is not valid based on the conditions I've set.
+var y = x-1;
+var spaces = 0;
+var validChar = new Array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", " ", "?", "!", ",", ".", "-", "'");
+for(z = 0; z < word.length; z++){ //Ensures phrase entered contains valid characters fom the array above
 
-    var y = x-1;
-    var spaces = 0;
-    var validChar = new Array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", " ", "?", "!", ",", ".", "-", "'");
-    for(z = 0; z < word.length; z++){ //Ensures phrase entered contains valid characters fom the array above
-
-        var letter = word.substring(y,x);
-        if(validChar.indexOf(letter) > -1){
-            x--;
-            y--;
-        }
-        else{
-            alert("Remove all special characters before proceeding.");
-            return;
-        }
+    var letter = word.substring(y,x);
+    if(validChar.indexOf(letter) > -1){
+        x--;
+        y--; // @author Joe Reisigle ///////
     }
-    x = word.length; //Takes the letters and underlines them.
-    y = x-1;
-    while (x>0){ //as long as the word entered lenth is greater than 0
-    numChar++;
-    var letter = word.substring(y,x); // will take y/1 before the last letter then go the the x which is x-1= y
-    if(letter === " "){
-    document.getElementById('letter'+x).innerHTML = "&nbsp;"; //adds necessary space if needed
-    document.getElementById('letter'+x).style.visibility = "hidden";
+    else{
+        alert("Remove all special characters before proceeding.");
+        return;
+    }
+}
+//Method learned from project for a production class at the University of Georgia's New Media Institute.
+//@author Joe Reisigle lines---- 184-214.
+x = word.length; //Takes the letters and underlines them.
+y = x-1; // y is x-1 ????
+while (x>0){ //as long as the word entered lenth is greater than 0
+numChar++; //will increase the number of characters as needed
+var letter = word.substring(y,x); // will take y/1 before the last letter then go the the x which is x-1= y
+if(letter === " "){
+document.getElementById('letter'+x).innerHTML = "&nbsp;"; //adds necessary space if needed
+document.getElementById('letter'+x).style.visibility = "hidden";
+document.getElementById('letter'+x).style.display = "block";
+document.getElementById('underline'+x).style.display = "block";
+spaces++;
+
+  }
+
+else if(letter === "?" || letter === "!" || letter === "," || letter === "." || letter === "-" || letter === "'"){
+    document.getElementById('letter'+x).innerHTML = letter;
     document.getElementById('letter'+x).style.display = "block";
     document.getElementById('underline'+x).style.display = "block";
     spaces++;
+  }
+else{
+  document.getElementById('letter'+x).innerHTML = letter;
+  document.getElementById('letter'+x).style.visibility = "hidden";
+  document.getElementById('underline'+x).style.display = "block";
+  document.getElementById('underline'+x).style.borderBottom = "3px solid black";
 
-        }
-
-      else if(letter === "?" || letter === "!" || letter === "," || letter === "." || letter === "-" || letter === "'"){
-          document.getElementById('letter'+x).innerHTML = letter;
-          document.getElementById('letter'+x).style.display = "block";
-          document.getElementById('underline'+x).style.display = "block";
-          spaces++;
-        }
-      else{
-        document.getElementById('letter'+x).innerHTML = letter;
-        document.getElementById('letter'+x).style.visibility = "hidden";
-        document.getElementById('underline'+x).style.display = "block";
-        document.getElementById('underline'+x).style.borderBottom = "3px solid black";
-
-        }
-        x--;
-        y--;
-    }
-    phraseLength = word.length - spaces; //subtracts all letters that cannot be gussed
-    document.getElementById('multiPage').style.display = "none";
-    document.getElementById('gamePage').style.display = "block";
-    splitWords();
-    document.getElementById('challengeBank').style.display = "none";
-    draw(); // 'challengeBank' element voided in Final Stages of Project
+  }
+  x--;
+  y--; ////used this method by @author Joe Reisigle to get functionality for the multiplayer phrase guesser"
 }
+phraseLength = word.length - spaces; //subtracts all letters that cannot be gussed
+document.getElementById('multiPage').style.display = "none";
+document.getElementById('gamePage').style.display = "block";
+splitWords();
+document.getElementById('challengeBank').style.display = "none";
+draw(); // 'challengeBank' element voided in Final Stages of Project
+}
+
+// *******Author of code  @Joe Reisigle *******
+//The CanvasRenderingContext2D.beginPath()
+//is a method that is used to draw on a <canvas>
+//starts a new path by emptying the list of sub-paths.
+
 
 function draw(){ //self-explanatory, got help frpm internet to set up and for the calulations.
     var ctx = document.getElementById("hangman").getContext('2d');
@@ -331,6 +342,7 @@ function draw(){ //self-explanatory, got help frpm internet to set up and for th
             cntx.moveTo(150,40);
             cntx.lineTo(150,80);
             cntx.stroke();
+            /// ************Author @@Joe Reisigle ***********//
 }
 
 function splitWords(){ //**Not working properly. //Supposed to give each word displayed
@@ -340,10 +352,13 @@ function splitWords(){ //**Not working properly. //Supposed to give each word di
     var countBack = 16; //if 16th letter is a space it will be removed
     if(numChar > 15){
     while(countBack > 1){
-      if(document.getElementById('letter16').innerHTML == "&nbsp;"){
+      if(document.getElementById('letter16').innerHTML == "&nbsp;"){ //"&nbsp" is a fixed space or hard space, Non-Breaking SPace (NBSP) is used to create a space in a line that cannot be broken by word wrap. With HTML &nbsp; this method allows you to create multiple spaces that are visible on a web page and not only in the source code.
         document.getElementById('underline16').style.width = "0px";
         document.getElementById('underline16').style.marginRight = "0px";
             }
+            /////******* @Author Joe Reisigle ******/////
+            ///******
+
       if(document.getElementById('letter'+countBack).innerHTML == "&nbsp;"){
         document.getElementById('underline'+countBack).style.width = (document.getElementById('underline1').offsetWidth)*(16-countBack)+"px";
         placeKeep = countBack;
@@ -355,12 +370,12 @@ function splitWords(){ //**Not working properly. //Supposed to give each word di
     }
   for(x=0;x<8;x++){
     countBack = 15+placeKeep;
-    if(numChar > countBack){
+    if(numChar > countBack){ //@Author Joe Reisigle if statement that checks for length of a word. If it is over 15 char, countback will prevent lines from bleeding over. /////
     while(countBack > 1){
     if(document.getElementById('letter'+countBack).innerHTML == "&nbsp;"){
       document.getElementById('underline'+countBack).style.width = (document.getElementById('underline1').offsetWidth*((16+placeKeep)-countBack))+"px";
       placeKeep = countBack;
-      countBack = 0; // runs countBack function 8 more times
+      countBack = 0; //  FOR LOOP that runs the numChar countBack function 8 more times
                 }
                 countBack--;
             }
@@ -475,13 +490,14 @@ function guessLetter(){ //finds id and value of letter guessed an matches it acc
         }
     }
 }
-
+/////********* @Author Joe Reisigle lines 490-952 /////////////
+//// from: project for a production class at the University of Georgia's New Media Institute.///
 function hang(){ // as user guesses incorrect answers, fuction will run to start drawling hangman as number of incorrect guesses increases.
     var ctx = document.getElementById("hangman").getContext('2d');
     if(numWrong==1){
         ctx.beginPath(); //head
-            ctx.arc(150, 100, 20, 0, 2*Math.PI);
-            ctx.stroke();
+            ctx.arc(150, 100, 20, 0, 2*Math.PI); //even when the user has lost, IF statements check for the number of letters guessed in correctly for 1-25.
+            ctx.stroke();                        //Hangman will continue to be draw body parts until user guesses the song, phrase, or title correctly.
         ctx.beginPath(); //left eye
             ctx.arc(143, 95, 3.5, 0, 2*Math.PI);
             ctx.stroke();
@@ -939,17 +955,19 @@ function hang(){ // as user guesses incorrect answers, fuction will run to start
             ctx.moveTo(77,240);
             ctx.lineTo(97,240);
             ctx.stroke();
+            ///////******* @author Joe Reisigle lines ^ 490-952 **************////////
     }
 }
 
-function reset(){ //**** NOT working properly.
-    var ul1 = document.getElementById('underline1').offsetWidth;
+function reset(){ //**** NOT working properly. Probably spacing-related
+    var ul1 = document.getElementById('underline1').offsetWidth; // got ul1 @author Joe Reisigle///
     var results = document.getElementById('results');
     var again = document.getElementById('again');
     for(a = 1; a < 101; a++){
       document.getElementById('letter'+a).innerHTML = "&nbsp;"; //adds space for letters
       document.getElementById('underline'+a).style.width = ul1 + "px";
-
+///////********** @author Joe Reisigle******//// ul1 gets multiple expressions in a single text box and to get buttons to display nicely. More related to styling.
+/// lines 956----97- /////////
     if(ul1 == 50){
       document.getElementById('underline'+a).style.marginRight = "5px";
       results.style.height = "70px";
@@ -957,6 +975,7 @@ function reset(){ //**** NOT working properly.
     else if(ul1 == 28){
       document.getElementById('underline'+a).style.marginRight = "3px";
       results.style.height = "50px";
+      ////////// ******@author Joe Reisigle ******* ////////
         }
     else{
     document.getElementById('underline'+a).style.marginRight = "3px";

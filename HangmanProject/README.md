@@ -36,9 +36,9 @@ The (( cntx.beginPath();
  Strings /// var placeKeep = 0;
     var countBack = ;
 
-   Strings in JS to keep organization and properly dispaly characters when there is over 15 characters on a single line.
+   Strings in JS to keep organization and properly display characters when there is over 15 characters on a single line.
 
-   Fuctions in place to run when user wins/loses.
+   Functions in place to run when user wins/loses.
 
 
 

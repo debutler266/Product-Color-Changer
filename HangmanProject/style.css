@@ -339,7 +339,7 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs,
 
                  }
 
-#letterBank div:hover {
+#letterBank div:hover { 
     background-color: #797979;
                  }
  #letterBank div:active{
