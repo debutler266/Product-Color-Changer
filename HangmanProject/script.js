@@ -145,7 +145,7 @@ function challengeGuess(){ /// ENTIRE 'Challenge function was voided in index.ht
       document.getElementById('home').style.display = "block";
       document.getElementById('letter1').style.visibility = "visible";
     }
-} ////// Ignore ^ lines 79-148 /////// 
+} ////// Ignore ^ lines 79-148 ///////
 
 function countChars(countfrom,displayto) { //counts and keeps track of characters typed into phrase textbox.
     var len = document.getElementById(countfrom).value.length;
